@@ -1,0 +1,178 @@
+/* Colours, fonts, motion speed and the one spacing scale (8 / 24 / 56px) used everywhere */
+:root {
+  --bg: #FFFFFF; --bg-soft: #F8EEF8; --text: #14101F; --text-2: #4A4260;
+  --line: #DCCFE8; --line-hover: #B9A3E3;
+  --wash-purple: rgba(109, 40, 217, 0.12); --wash-pink: rgba(219, 112, 190, 0.20);
+  --accent: #6D28D9; --accent-hover: #4C1D95;
+  --s1: 8px; --s2: 24px; --s3: 56px; --edge: 24px;
+  --ease: 0.2s ease;
+  --font-head: "Source Serif 4", Georgia, serif;
+  --font-body: "Inter", Arial, sans-serif;
+}
+
+/* Base element styles: page, headings, paragraphs, lists, links, images, text selection */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; }
+::selection { background: var(--accent); color: #FFFFFF; }
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; color: var(--text); }
+h1 { font-size: clamp(2.25rem, 6vw, 3.25rem); letter-spacing: -0.01em; margin: 0 0 var(--s1); }
+h2 { font-size: 1.875rem; margin: 0 0 var(--s2); }
+h3 { font-size: 1.125rem; margin: var(--s2) 0 var(--s1); }
+p { margin: 0 0 var(--s1); }
+ul { margin: var(--s1) 0 0; padding-left: 20px; }
+li { margin-bottom: var(--s1); max-width: 70ch; }
+a { color: var(--accent); transition: color var(--ease); }
+a:hover { color: var(--accent-hover); }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+img { max-width: 100%; display: block; }
+
+/* Navigation bar: flexbox row, sticky at the top, slightly see-through, thin line underneath */
+header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  position: relative; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: var(--s1) var(--s2); max-width: 1000px; margin: 0 auto; padding: var(--s1) var(--edge);
+}
+.brand { font-family: var(--font-head); font-size: 1.125rem; font-weight: 700; color: var(--text); text-decoration: none; }
+.brand:hover { color: var(--accent-hover); }
+.nav-links { display: flex; flex-wrap: wrap; gap: var(--s1); list-style: none; margin: 0; padding: 0; }
+.nav-links li { margin: 0; }
+
+/* Navigation links: an underline sweeps in from the left on hover */
+.nav-link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  text-decoration: none; font-size: 0.9375rem;
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 12px calc(100% - 8px) / 0 2px;
+  transition: background-size var(--ease), color var(--ease);
+}
+.nav-link:hover { background-size: calc(100% - 24px) 2px; color: var(--accent-hover); }
+
+/* Hamburger menu: hidden on wide screens, shown on phones (the checkbox opens it, no JavaScript) */
+.menu-toggle, .menu-button { display: none; }
+
+/* Buttons: one solid style for all three buttons, at least 44px tall; a darker purple fill sweeps in on hover */
+.button {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--s2);
+  background: linear-gradient(var(--accent-hover), var(--accent-hover)) no-repeat left center / 0 100%, var(--accent);
+  color: #FFFFFF; border: 2px solid var(--accent); border-radius: 8px;
+  font-weight: 600; text-decoration: none;
+  transition: background-size 0.3s ease, border-color var(--ease), color var(--ease);
+}
+.button:hover { background-size: 100% 100%; border-color: var(--accent-hover); color: #FFFFFF; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+
+/* Sections: shared wrapper, two background tones only (white and soft pink-lavender) */
+section { padding: var(--s3) var(--edge); }
+.wrap { max-width: 880px; margin: 0 auto; }
+.soft { background: var(--bg-soft); }
+.text { max-width: 68ch; }
+
+/* Hero (#hero): round photo with a ring, name, headline, profile and buttons */
+#hero { padding-top: 72px; padding-bottom: 72px; }
+.hero-grid { display: flex; align-items: center; gap: 48px; }
+.photo {
+  width: 176px; height: 176px; flex: none; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  padding: 4px; background: var(--bg); border: 3px solid var(--line-hover);
+}
+.headline { font-size: 1.1875rem; font-weight: 600; color: var(--text-2); max-width: 68ch; }
+
+/* Background washes: soft purple and pink glows from the palette behind the hero and contact sections */
+#hero, #contact {
+  background: radial-gradient(60% 90% at 0% 0%, var(--wash-purple), transparent),
+              radial-gradient(55% 80% at 100% 100%, var(--wash-pink), transparent), var(--bg);
+}
+
+/* Cards: flat boxes with a thin full outline; the outline turns purple-tinted on hover */
+.card {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: var(--s2);
+  transition: border-color var(--ease), background-color var(--ease);
+}
+.card:hover { border-color: var(--line-hover); }
+#certifications .card:hover { background: var(--bg-soft); }
+.card h3 { margin: 0 0 var(--s1); }
+.meta { color: var(--text-2); font-size: 0.9375rem; max-width: 70ch; }
+.stack { display: flex; flex-direction: column; gap: var(--s2); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--s2); }
+
+/* Skills (#skills): a plain list where every skill names its proof, thin line between rows */
+.plain { list-style: none; padding: 0; margin: 0; }
+.plain li { margin: 0; padding: 12px 0; max-width: none; border-bottom: 1px solid var(--line); }
+.plain li:last-child { border-bottom: 0; }
+
+/* Paper resume (#resume): hidden on screen, shown only when printing, so I can save it as resume.pdf */
+#resume { display: none; font-size: 0.9375rem; line-height: 1.5; }
+.r-top { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s1); }
+.r-photo { width: 80px; height: 80px; flex: none; border-radius: 50%; object-fit: cover; object-position: center top; }
+.r-name { margin: 0 0 4px; font-size: 1.5rem; }
+.r-head { margin: var(--s2) 0 var(--s1); padding-bottom: 4px; border-bottom: 1px solid var(--line); font-size: 1.0625rem; }
+#resume ul { margin: 4px 0 var(--s1); }
+#resume li { margin-bottom: 2px; max-width: none; }
+
+/* Contact (#contact) and footer */
+#contact { padding-bottom: var(--s3); }
+footer { padding: var(--s2) var(--edge); text-align: center; border-top: 1px solid var(--line); color: var(--text-2); font-size: 0.9375rem; }
+
+/* Animations: the hero fades up once on load, and cards, rows and headings fade up as they scroll into view */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.photo, #hero h1 { animation: rise 0.6s ease-out both; }
+#hero .headline { animation: rise 0.6s ease-out 0.1s both; }
+#hero .text { animation: rise 0.6s ease-out 0.2s both; }
+#hero .actions { animation: rise 0.6s ease-out 0.3s both; }
+@supports (animation-timeline: view()) {
+  h2, .card, .plain li {
+    animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 35%;
+  }
+}
+
+/* Phones: screens narrower than 700px stack the hero, tighten spacing and turn the links into a hamburger menu */
+@media (max-width: 700px) {
+  :root { --edge: 16px; --s3: 40px; }
+  html { scroll-padding-top: 80px; }
+  h2 { font-size: 1.625rem; }
+  #hero { padding-top: var(--s3); padding-bottom: var(--s3); }
+  .hero-grid { flex-direction: column; align-items: center; gap: var(--s2); }
+  .photo { width: 144px; height: 144px; align-self: center; margin: 0 auto; }
+  .hero-grid > div { width: 100%; }
+  #hero .actions { justify-content: center; }
+  .brand { order: 1; }
+  .menu-button {
+    order: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg);
+  }
+  .menu-button span { width: 20px; height: 2px; background: var(--text); transition: transform var(--ease), opacity var(--ease); }
+  .menu-toggle { display: block; position: absolute; top: var(--s1); right: var(--edge); width: 44px; height: 44px; margin: 0; opacity: 0; z-index: 2; cursor: pointer; }
+  .menu-toggle:focus-visible + .menu-button { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .menu-toggle:checked + .menu-button span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle:checked + .menu-button span:nth-child(2) { opacity: 0; }
+  .menu-toggle:checked + .menu-button span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links { order: 4; display: none; flex-direction: column; gap: 0; width: 100%; margin: 0; }
+  .menu-toggle:checked ~ .nav-links { display: flex; }
+  .nav-link { width: 100%; }
+}
+
+/* Print: show only the resume sheet, black on white, one A4 page, no animation */
+@media print {
+  @page { size: A4; margin: 10mm; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  header, footer, #hero, #experience, #skills, #education, #certifications, #contact { display: none; }
+  body { background: #FFFFFF; }
+  #resume { display: block; max-width: none; margin: 0; padding: 0; font-size: 8.5pt; line-height: 1.3; }
+  #resume, #resume * { color: #000000; }
+  .r-name { font-size: 15pt; }
+  .r-head { font-size: 10pt; margin: 8px 0 4px; border-bottom: 1px solid #000000; }
+  .r-photo { width: 60px; height: 60px; }
+  #resume ul.cols { columns: 2; column-gap: 16px; padding-left: 14px; }
+  #resume p { margin-bottom: 2px; }
+}
+
+/* Reduced motion: turn off every animation and transition for people who ask for it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
